@@ -1,0 +1,37 @@
+# Core dependencies for NeuralScript compiler
+# No external dependencies for the core lexer/parser (from-scratch implementation)
+
+# Development and testing
+pytest>=7.4.0                 # Testing framework
+pytest-cov>=4.1.0            # Coverage reporting
+pytest-benchmark>=4.0.0       # Performance benchmarks
+black>=23.3.0                 # Code formatting
+flake8>=6.0.0                 # Linting
+mypy>=1.4.0                   # Type checking
+isort>=5.12.0                 # Import sorting
+
+# Documentation
+sphinx>=7.1.0                 # Documentation generation
+sphinx-rtd-theme>=1.2.2       # RTD theme
+myst-parser>=2.0.0            # Markdown support
+
+# Performance profiling
+cProfile                       # Built-in profiler
+line_profiler>=4.0.0          # Line-by-line profiling
+memory_profiler>=0.61.0       # Memory usage profiling
+
+# For LLVM backend (will be installed later when needed)
+# llvmlite>=0.40.0             # LLVM Python bindings
+
+# For GPU support (optional)
+# numba>=0.57.0                # GPU kernels
+# cupy>=12.0.0                 # CUDA support
+
+# For scientific computing interop
+numpy>=1.24.0                 # Numerical arrays
+scipy>=1.10.0                 # Scientific computing
+
+# Development utilities
+rich>=13.4.0                  # Rich console output
+click>=8.1.0                  # CLI framework
+colorama>=0.4.6               # Cross-platform colors

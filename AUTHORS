@@ -1,0 +1,50 @@
+# NeuralScript Contributors
+
+## Project Creator and Lead Developer
+
+**xwest** - *Original author and maintainer*
+- Designed and implemented the complete language specification
+- Built the full compiler pipeline (lexer, parser, semantic analyzer, IR generator, LLVM backend)
+- Developed unique language features: dimensional analysis, complex numbers, mathematical notation
+- Created the interactive REPL and language server protocol implementation
+- Architected the automatic differentiation system
+- Designed and implemented all example applications and test suites
+
+*Primary contact for project direction and major architectural decisions.*
+
+## Core Philosophy
+
+NeuralScript was created with the vision of making scientific computing as natural as mathematics itself. The language combines:
+
+- Mathematical expressiveness with Unicode operator support
+- Compile-time dimensional analysis for physics correctness  
+- First-class complex numbers for signal processing and quantum computing
+- Automatic differentiation built into the compiler
+- Type safety without sacrificing developer productivity
+
+## Acknowledgments
+
+While NeuralScript is an original creation, inspiration was drawn from several sources:
+
+- **Mathematical notation**: Influenced by how mathematics is written in academic papers
+- **Type systems**: Inspired by Rust's ownership model and Haskell's type inference
+- **Scientific computing**: Motivated by the needs of physics, engineering, and ML practitioners
+- **Developer experience**: Focused on clear error messages and helpful tooling
+
+## Contributing
+
+We welcome contributions to NeuralScript! See `CONTRIBUTING.md` for guidelines on:
+- Reporting bugs and suggesting features
+- Setting up the development environment
+- Code style and testing requirements
+- The pull request process
+
+All contributors will be recognized here for their contributions to the project.
+
+## Future Contributors
+
+*Space reserved for future contributors - your name could be here!*
+
+---
+
+*NeuralScript is developed with passion for advancing scientific computing and making complex mathematical concepts accessible to all developers.*

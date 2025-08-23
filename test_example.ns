@@ -1,0 +1,56 @@
+// Test NeuralScript Example - showcasing key language features
+// This tests our lexer with realistic code
+
+import std.math
+import std.units
+
+// Mathematical computation with dimensional analysis
+fn calculate_kinetic_energy(mass: Mass, velocity: Velocity) -> Energy {
+    // Using Unicode mathematical notation
+    let KE = ½ × mass × velocity²
+    return KE
+}
+
+// Complex number operations
+fn impedance_calculation() -> Complex {
+    let R = 100.0  // Resistance in ohms
+    let ωL = 50.0  // Inductive reactance
+    let Z = R + ωL×i  // Complex impedance
+    return Z
+}
+
+// Unit literal examples
+fn physics_demo() {
+    let distance = 100.5_m
+    let time = 5.2_s
+    let speed = distance / time
+    
+    // Using subscripts and Greek letters
+    let α₁ = 0.5
+    let β₂ = π/4
+    
+    print(f"Speed: {speed}")
+    print(f"α₁ = {α₁}, β₂ = {β₂}")
+}
+
+// Automatic differentiation showcase
+fn gradient_example(x: Real) -> Real {
+    let f = x³ + 2×x² - 5×x + 1
+    return ∇f  // Automatic gradient
+}
+
+// Main program
+fn main() {
+    let m = 10.0_kg
+    let v = 15.0_m/s
+    let energy = calculate_kinetic_energy(m, v)
+    
+    let z = impedance_calculation()
+    physics_demo()
+    
+    let result = gradient_example(2.0)
+    
+    print(f"Kinetic Energy: {energy}")
+    print(f"Complex Impedance: {z}")
+    print(f"Gradient at x=2: {result}")
+}

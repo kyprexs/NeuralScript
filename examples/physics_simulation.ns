@@ -1,0 +1,219 @@
+// NeuralScript Physics Simulation
+// Demonstrates dimensional analysis, scientific computing, and mathematical notation
+
+// Physical constants with proper units
+const GRAVITY: MeterPerSecondSquared = 9.81_m/s²
+const LIGHT_SPEED: MeterPerSecond = 299_792_458_m/s
+const PLANCK_CONSTANT: JouleSecond = 6.626e-34_J⋅s
+const ELECTRON_MASS: Kilogram = 9.109e-31_kg
+
+// Particle physics with complex wavefunctions
+struct Particle {
+    position: Vector3<Meter>
+    velocity: Vector3<MeterPerSecond>
+    mass: Kilogram
+    charge: Coulomb
+    wavefunction: Complex<f64>  // Quantum wavefunction
+}
+
+impl Particle {
+    // Classical mechanics with proper units
+    fn kinetic_energy(&self) -> Joule {
+        0.5 × self.mass × (self.velocity.magnitude())²
+    }
+    
+    // Relativistic energy-momentum relation: E² = (pc)² + (mc²)²
+    fn relativistic_energy(&self) -> Joule {
+        let momentum = self.mass × self.velocity.magnitude()
+        let rest_energy = self.mass × LIGHT_SPEED²
+        
+        √((momentum × LIGHT_SPEED)² + rest_energy²)
+    }
+    
+    // Quantum mechanical momentum operator: p̂ = -iℏ∇
+    fn quantum_momentum(&self) -> Vector3<KilogramMeterPerSecond> {
+        let ψ = self.wavefunction
+        let ∇ψ = gradient(ψ)  // Spatial gradient of wavefunction
+        
+        -1.0i × (PLANCK_CONSTANT / 2π) × ∇ψ
+    }
+}
+
+// Electromagnetic field simulation
+struct ElectromagneticField {
+    E: Vector3<NewtonPerCoulomb>  // Electric field
+    B: Vector3<Tesla>             // Magnetic field
+}
+
+impl ElectromagneticField {
+    // Maxwell's equations in differential form
+    fn evolve(&mut self, dt: Second) {
+        // ∇ × E = -∂B/∂t (Faraday's law)
+        let curl_E = curl(self.E)
+        self.B -= dt × curl_E
+        
+        // ∇ × B = μ₀ε₀ ∂E/∂t (Ampère's law, vacuum)
+        let curl_B = curl(self.B)
+        let μ₀ = 4π × 1e-7_H/m  // Permeability of free space
+        let ε₀ = 8.854e-12_F/m  // Permittivity of free space
+        
+        self.E += dt × curl_B / (μ₀ × ε₀)
+    }
+    
+    // Lorentz force: F = q(E + v × B)
+    fn lorentz_force(&self, particle: &Particle) -> Newton {
+        particle.charge × (self.E + cross_product(particle.velocity, self.B))
+    }
+}
+
+// N-body gravitational simulation
+struct GravitationalSystem {
+    bodies: Vec<CelestialBody>
+    G: NewtonMeterSquaredPerKilogramSquared  // Gravitational constant
+}
+
+struct CelestialBody {
+    name: String
+    position: Vector3<Meter>
+    velocity: Vector3<MeterPerSecond>
+    mass: Kilogram
+    radius: Meter
+}
+
+impl GravitationalSystem {
+    fn new() -> Self {
+        Self {
+            bodies: vec![],
+            G: 6.674e-11_N⋅m²/kg²
+        }
+    }
+    
+    // Gravitational force between two bodies: F = G⋅m₁⋅m₂/r²
+    fn gravitational_force(&self, body1: &CelestialBody, body2: &CelestialBody) -> Vector3<Newton> {
+        let r_vec = body2.position - body1.position
+        let r = r_vec.magnitude()
+        let r_hat = r_vec / r
+        
+        (self.G × body1.mass × body2.mass / r²) × r_hat
+    }
+    
+    // Simulate using Runge-Kutta integration
+    fn simulate(&mut self, time_step: Second, total_time: Second) {
+        let steps = (total_time / time_step).floor() as i32
+        
+        for step in 0..steps {
+            let current_time = step as f64 × time_step
+            
+            // Calculate forces on each body
+            for i in 0..self.bodies.len() {
+                let mut total_force = Vector3::zero()
+                
+                for j in 0..self.bodies.len() {
+                    if i ≠ j {
+                        total_force += self.gravitational_force(&self.bodies[i], &self.bodies[j])
+                    }
+                }
+                
+                // Newton's second law: F = ma
+                let acceleration = total_force / self.bodies[i].mass
+                
+                // Update velocity and position (Euler integration)
+                self.bodies[i].velocity += acceleration × time_step
+                self.bodies[i].position += self.bodies[i].velocity × time_step
+            }
+            
+            // Print orbital data every 100 steps
+            if step % 100 == 0 {
+                self.print_system_state(current_time)
+            }
+        }
+    }
+    
+    fn print_system_state(&self, time: Second) {
+        println!("Time: {time:.1f}")
+        for body in &self.bodies {
+            let kinetic = 0.5 × body.mass × (body.velocity.magnitude())²
+            println!("  {}: pos={}, KE={kinetic:.2e}", body.name, body.position, kinetic)
+        }
+    }
+}
+
+// Quantum harmonic oscillator solution
+fn quantum_harmonic_oscillator(n: i32, x: Meter, ω: RadianPerSecond, m: Kilogram) -> Complex<f64> {
+    // Energy eigenvalues: Eₙ = ℏω(n + 1/2)
+    let energy = PLANCK_CONSTANT / 2π × ω × (n as f64 + 0.5)
+    
+    // Characteristic length: x₀ = √(ℏ/mω)
+    let x0 = √(PLANCK_CONSTANT / 2π / (m × ω))
+    
+    // Hermite polynomials and Gaussian envelope
+    let gaussian = ℯ^(-(x/x0)² / 2.0)
+    let hermite = hermite_polynomial(n, x / x0)
+    
+    // Normalization constant
+    let norm = 1.0 / √(2_f64^n as f64 × factorial(n) as f64 × √π × x0)
+    
+    norm × hermite × gaussian × ℯ^(-1.0i × energy × 0.0_s / (PLANCK_CONSTANT / 2π))
+}
+
+// Main physics simulation
+fn main() {
+    println!("⚛️  NeuralScript Physics Simulation")
+    
+    // Create solar system simulation
+    let mut solar_system = GravitationalSystem::new()
+    
+    // Add Sun
+    solar_system.bodies.push(CelestialBody {
+        name: "Sun".to_string(),
+        position: Vector3::new(0.0_m, 0.0_m, 0.0_m),
+        velocity: Vector3::new(0.0_m/s, 0.0_m/s, 0.0_m/s),
+        mass: 1.989e30_kg,
+        radius: 6.96e8_m
+    })
+    
+    // Add Earth with orbital velocity
+    solar_system.bodies.push(CelestialBody {
+        name: "Earth".to_string(),
+        position: Vector3::new(1.496e11_m, 0.0_m, 0.0_m),  // 1 AU
+        velocity: Vector3::new(0.0_m/s, 29_780_m/s, 0.0_m/s),  // Orbital velocity
+        mass: 5.972e24_kg,
+        radius: 6.371e6_m
+    })
+    
+    // Simulate for one year
+    println!("Simulating solar system for 1 year...")
+    solar_system.simulate(time_step: 86_400_s, total_time: 365.25 × 86_400_s)
+    
+    // Electromagnetic wave simulation
+    let mut em_field = ElectromagneticField {
+        E: Vector3::new(100.0_N/C, 0.0_N/C, 0.0_N/C),
+        B: Vector3::new(0.0_T, 0.0_T, 3.33e-7_T)
+    }
+    
+    println!("Evolving electromagnetic field...")
+    for i in 0..1000 {
+        em_field.evolve(dt: 1e-15_s)  // Femtosecond time steps
+        if i % 100 == 0 {
+            println!("Step {i}: |E| = {:.2e} N/C, |B| = {:.2e} T", 
+                     em_field.E.magnitude(), em_field.B.magnitude())
+        }
+    }
+    
+    // Quantum particle demonstration
+    let electron = Particle {
+        position: Vector3::new(0.0_m, 0.0_m, 0.0_m),
+        velocity: Vector3::new(1e6_m/s, 0.0_m/s, 0.0_m/s),
+        mass: ELECTRON_MASS,
+        charge: -1.602e-19_C,
+        wavefunction: 1.0+0.0i / √2.0
+    }
+    
+    let classical_ke = electron.kinetic_energy()
+    let relativistic_e = electron.relativistic_energy()
+    
+    println!("Electron analysis:")
+    println!("  Classical KE: {classical_ke:.2e}")
+    println!("  Relativistic E: {relativistic_e:.2e}")
+    println!("  Quantum momentum: {:.2e}", electron.quantum_momentum().magnitude())
+}

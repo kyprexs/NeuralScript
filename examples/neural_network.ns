@@ -1,0 +1,120 @@
+// NeuralScript Neural Network Example
+// Showcases mathematical notation, automatic differentiation, and unit literals
+
+// Define a neural network with mathematical precision
+struct NeuralNetwork {
+    weights1: Matrix<f64, 784, 128>    // Input to hidden layer
+    biases1: Vector<f64, 128>
+    weights2: Matrix<f64, 128, 10>     // Hidden to output layer  
+    biases2: Vector<f64, 10>
+    learning_rate: f64
+}
+
+impl NeuralNetwork {
+    // Forward pass with mathematical notation
+    fn forward(&self, input: Vector<f64, 784>) -> Vector<f64, 10> {
+        // Hidden layer computation: σ(W₁x + b₁)
+        let hidden = sigmoid(self.weights1 ⊙ input + self.biases1)
+        
+        // Output layer: W₂h + b₂
+        let output = self.weights2 ⊙ hidden + self.biases2
+        softmax(output)
+    }
+    
+    // Training with automatic differentiation
+    fn train(&mut self, data: &TrainingData, epochs: i32) {
+        for epoch in 1..=epochs {
+            let mut total_loss = 0.0
+            
+            for (input, target) in data.batches(32) {
+                let prediction = self.forward(input)
+                let loss = cross_entropy_loss(prediction, target)
+                
+                // Automatic differentiation - ∇ computes gradients
+                let gradients = ∇loss  // Unicode gradient operator!
+                
+                // Gradient descent update
+                self.weights1 -= self.learning_rate × gradients.weights1
+                self.biases1 -= self.learning_rate × gradients.biases1
+                self.weights2 -= self.learning_rate × gradients.weights2
+                self.biases2 -= self.learning_rate × gradients.biases2
+                
+                total_loss += loss
+            }
+            
+            println!("Epoch {epoch}: Loss = {total_loss:.4f}")
+        }
+    }
+}
+
+// Mathematical activation functions with proper notation
+fn sigmoid(x: f64) -> f64 {
+    1.0 / (1.0 + ℯ^(-x))  // Uses mathematical constant ℯ
+}
+
+fn relu(x: f64) -> f64 {
+    max(0.0, x)
+}
+
+// Physics-aware neural network with dimensional analysis
+struct PhysicsNN {
+    mass_predictor: NeuralNetwork
+    velocity_predictor: NeuralNetwork
+}
+
+impl PhysicsNN {
+    fn predict_momentum(&self, features: Vector<f64, 10>) 
+        -> (Kilogram, MeterPerSecond, KilogramMeterPerSecond) 
+    {
+        // Predict mass and velocity with proper units
+        let mass = 50.0_kg + self.mass_predictor.forward(features)[0] * 1.0_kg
+        let velocity = 10.0_m/s + self.velocity_predictor.forward(features)[0] * 1.0_m/s
+        
+        // Momentum calculation with automatic unit checking
+        let momentum = mass × velocity  // Compiler ensures dimensional correctness!
+        
+        (mass, velocity, momentum)
+    }
+}
+
+// Complex number neural network for quantum computing
+fn quantum_layer(state: Vector<Complex<f64>, 4>) -> Vector<Complex<f64>, 4> {
+    let hadamard = Matrix::new([
+        [1.0+0.0i, 1.0+0.0i],
+        [1.0+0.0i, -1.0+0.0i]
+    ]) / √2.0  // Mathematical square root symbol
+    
+    hadamard ⊙ state
+}
+
+// Main function demonstrating the neural network
+fn main() {
+    println!("🧠 NeuralScript Neural Network Demo")
+    
+    // Create network with proper initialization
+    let mut network = NeuralNetwork {
+        weights1: Matrix::random_normal(0.0, 0.1),
+        biases1: Vector::zeros(),
+        weights2: Matrix::random_normal(0.0, 0.1), 
+        biases2: Vector::zeros(),
+        learning_rate: 0.001
+    }
+    
+    // Train on MNIST-like data
+    let training_data = load_training_data("mnist.csv")
+    network.train(&training_data, epochs: 100)
+    
+    // Test physics-aware predictions
+    let physics_net = PhysicsNN::new()
+    let (mass, velocity, momentum) = physics_net.predict_momentum(test_features)
+    
+    println!("Predicted mass: {mass}")
+    println!("Predicted velocity: {velocity}")  
+    println!("Calculated momentum: {momentum}")
+    
+    // Test with complex numbers for quantum computing
+    let quantum_state = vector![1.0+0.0i, 0.0+0.0i, 0.0+0.0i, 1.0+0.0i] / √2.0
+    let new_state = quantum_layer(quantum_state)
+    
+    println!("Quantum state after Hadamard: {new_state}")
+}
