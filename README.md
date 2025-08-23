@@ -2,9 +2,10 @@
 
 *A modern programming language designed for scientific computing, machine learning, and mathematical modeling*
 
-[![Build Status](https://github.com/xwest/neuralscript/workflows/CI/badge.svg)](https://github.com/xwest/neuralscript/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-0.2.0--alpha-orange)](https://github.com/xwest/neuralscript/releases)
+[![Version](https://img.shields.io/badge/version-0.2.0--alpha-orange)](https://github.com/kyprexs/NeuralScript/releases)
+[![Language](https://img.shields.io/badge/language-NeuralScript-brightgreen)](https://github.com/kyprexs/NeuralScript)
+[![Stars](https://img.shields.io/github/stars/kyprexs/NeuralScript?style=social)](https://github.com/kyprexs/NeuralScript/stargazers)
 
 ## 🎯 Vision
 
@@ -168,8 +169,8 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ```bash
 # Clone the repository
-git clone https://github.com/xwest/neuralscript.git
-cd neuralscript
+git clone https://github.com/kyprexs/NeuralScript.git
+cd NeuralScript
 
 # Set up Python environment
 python -m venv venv
