@@ -558,17 +558,43 @@ class IRTensorOp(IRInstruction):
 
 @dataclass
 class IRMatMul(IRTensorOp):
-    """Matrix multiplication operation."""
+    """Matrix multiplication operation with SIMD optimization support."""
     left: IRValue
     right: IRValue
+    # SIMD optimization hints
+    prefer_simd: bool = True
+    block_size: Optional[int] = None
+    use_strassen: bool = False
+    parallel_threshold: int = 1000
     
-    def __init__(self, left: IRValue, right: IRValue, result_type: IRTensorType):
+    def __init__(self, left: IRValue, right: IRValue, result_type: IRTensorType,
+                 prefer_simd: bool = True, block_size: Optional[int] = None,
+                 use_strassen: bool = False, parallel_threshold: int = 1000):
         super().__init__(IRNodeType.MATMUL, [left, right], result_type)
         self.left = left
         self.right = right
+        self.prefer_simd = prefer_simd
+        self.block_size = block_size
+        self.use_strassen = use_strassen
+        self.parallel_threshold = parallel_threshold
+        
+        # Set SIMD metadata
+        self.set_metadata('simd_optimizable', prefer_simd)
+        self.set_metadata('block_size', block_size)
+        self.set_metadata('use_strassen', use_strassen)
+        self.set_metadata('parallel_threshold', parallel_threshold)
     
     def __str__(self) -> str:
-        return f"%{self.result.name} = matmul {self.left}, {self.right}"
+        opts = []
+        if self.prefer_simd:
+            opts.append("simd")
+        if self.block_size:
+            opts.append(f"block={self.block_size}")
+        if self.use_strassen:
+            opts.append("strassen")
+        
+        opt_str = f" [{', '.join(opts)}]" if opts else ""
+        return f"%{self.result.name} = matmul {self.left}, {self.right}{opt_str}"
 
 
 @dataclass

@@ -601,3 +601,7 @@ class SIMDProcessor:
                 'alignment_bytes': self.config.alignment_bytes,
             },
         }
+    
+    def get_available_instruction_sets(self) -> List[str]:
+        """Get list of available SIMD instruction sets as strings"""
+        return [iset.name for iset in self.capabilities.instruction_sets]
