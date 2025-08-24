@@ -1,0 +1,124 @@
+{
+  "startup_validation": {
+    "target_time_ms": 100.0,
+    "overall_success": true,
+    "scenario_validation": {
+      "scenarios_tested": 4,
+      "scenarios_successful": 4,
+      "average_startup_time_ms": 21.714515000858228,
+      "best_startup_time_ms": 11.94515999959549,
+      "worst_startup_time_ms": 35.04080000187969,
+      "target_achievement_rate": 1.0,
+      "all_scenarios_pass": true,
+      "detailed_scenarios": [
+        {
+          "total_startup_time_ms": 35.04080000187969,
+          "phase_times_ms": {
+            "system_init": 1.5125999998417683,
+            "cache_loading": 2.0446999988052994,
+            "core_compiler": 8.188600000721635,
+            "essential_runtime": 3.066599998419406,
+            "critical_modules": 5.220800001552561
+          },
+          "target_achieved": true,
+          "optimizations": {
+            "lazy_loading": true,
+            "startup_cache": true,
+            "parallel_init": true,
+            "minimal_core": true
+          },
+          "scenario": "cold_start"
+        },
+        {
+          "total_startup_time_ms": 19.88110000093002,
+          "phase_times_ms": {
+            "system_init": 1.424799997039372,
+            "cache_loading": 2.039900002273498,
+            "core_compiler": 8.221899999625748,
+            "essential_runtime": 3.0907999971532263,
+            "critical_modules": 5.097299999761162
+          },
+          "target_achieved": true,
+          "optimizations": {
+            "lazy_loading": true,
+            "startup_cache": true,
+            "parallel_init": true,
+            "minimal_core": true
+          },
+          "scenario": "warm_start"
+        },
+        {
+          "total_startup_time_ms": 11.94515999959549,
+          "phase_times_ms": {
+            "system_init": 1.4313000028778333,
+            "cache_loading": 2.047300000413088,
+            "core_compiler": 8.25279999844497,
+            "essential_runtime": 3.0522000015480444,
+            "critical_modules": 5.118599998240825
+          },
+          "target_achieved": true,
+          "optimizations": {
+            "lazy_loading": true,
+            "startup_cache": true,
+            "parallel_init": true,
+            "minimal_core": true
+          },
+          "scenario": "hot_start"
+        },
+        {
+          "total_startup_time_ms": 19.991000001027714,
+          "phase_times_ms": {
+            "system_init": 1.432000000932021,
+            "cache_loading": 2.112500002112938,
+            "core_compiler": 8.222399999795016,
+            "essential_runtime": 3.060300001379801,
+            "critical_modules": 5.158100000699051
+          },
+          "target_achieved": true,
+          "optimizations": {
+            "lazy_loading": true,
+            "startup_cache": true,
+            "parallel_init": true,
+            "minimal_core": true
+          },
+          "scenario": "production_start"
+        }
+      ]
+    },
+    "stress_test": {
+      "iterations": 10,
+      "startup_times_ms": [
+        19.756300000153715,
+        19.577500002924353,
+        19.82970000244677,
+        20.230199999787146,
+        20.09370000087074,
+        19.523800001479685,
+        20.044199998665135,
+        19.853300000249874,
+        20.06749999782187,
+        20.53689999956987
+      ],
+      "average_time_ms": 19.951310000396916,
+      "median_time_ms": 19.948749999457505,
+      "std_deviation_ms": 0.306960262306203,
+      "min_time_ms": 19.523800001479685,
+      "max_time_ms": 20.53689999956987,
+      "consistent_performance": true,
+      "all_under_target": true,
+      "performance_score": 0.8004868999960308
+    },
+    "optimization_systems": {
+      "lazy_loading": true,
+      "startup_cache": true,
+      "parallel_initialization": true,
+      "minimal_core_path": true
+    }
+  },
+  "performance_summary": {
+    "best_startup_time_ms": 11.94515999959549,
+    "average_startup_time_ms": 20.83291250062757,
+    "worst_startup_time_ms": 35.04080000187969,
+    "target_achievement_confidence": 0.8004868999960308
+  }
+}
